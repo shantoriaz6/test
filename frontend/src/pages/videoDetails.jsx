@@ -90,6 +90,8 @@ const VideoDetails = () => {
 
   return (
     <div>
+        if (!video) return <p>Loading...</p>;
+
         <h2>{video.title}</h2>
        <video controls width="100%">
         <source src= {video.videoFile?.url} type='video/mp4'/>
@@ -106,7 +108,7 @@ const VideoDetails = () => {
 
         <h3>Comments</h3>
 
-        <form onSubmit={{handleAddComment}}>
+        <form onSubmit={handleAddComment}>
             <input type="text"
             placeholder='Add your Comment here'
             value={newComment}

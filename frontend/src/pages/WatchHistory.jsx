@@ -2,30 +2,30 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import VideoCard from '../components/VideoCard';
 
-const LikedVideos = () => {
-  const [videos, setVideos] = useState([]);
+const WatchHistory = () => {
+  const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchLikedVideos();
+    fetchHistory();
   }, []);
 
-  const fetchLikedVideos = async () => {
+  const fetchHistory = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8000/api/v1/likes/videos', {
+      const response = await axios.get('http://localhost:8000/api/v1/users/history', {
         withCredentials: true
       });
 
-      console.log('Liked videos response:', response.data);
+      console.log('History response:', response.data);
 
       if (response.data?.statusCode === 200) {
-        setVideos(response.data.data || []);
+        setHistory(response.data.data || []);
       }
     } catch (err) {
-      console.error('Error fetching liked videos:', err);
-      setError(err.response?.data?.message || 'Failed to load liked videos');
+      console.error('Error fetching history:', err);
+      setError(err.response?.data?.message || 'Failed to load watch history');
     } finally {
       setLoading(false);
     }
@@ -34,7 +34,7 @@ const LikedVideos = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-white text-xl">Loading liked videos...</div>
+        <div className="text-white text-xl">Loading watch history...</div>
       </div>
     );
   }
@@ -49,16 +49,16 @@ const LikedVideos = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold text-white mb-6">Liked Videos</h1>
+      <h1 className="text-3xl font-bold text-white mb-6">Watch History</h1>
       
-      {videos.length === 0 ? (
+      {history.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-400 text-lg">No liked videos yet</p>
-          <p className="text-gray-500 text-sm mt-2">Videos you like will appear here</p>
+          <p className="text-gray-400 text-lg">No watch history yet</p>
+          <p className="text-gray-500 text-sm mt-2">Videos you watch will appear here</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {videos.map((video) => (
+          {history.map((video) => (
             <VideoCard key={video._id} video={video} />
           ))}
         </div>
@@ -67,4 +67,4 @@ const LikedVideos = () => {
   );
 };
 
-export default LikedVideos;
+export default WatchHistory;

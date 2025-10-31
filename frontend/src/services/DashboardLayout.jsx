@@ -10,7 +10,7 @@ const DashboardLayout = () => {
       
       <div className='ml-64'>
         <Navbar />
-        <main className='mt-16 p-4'>
+        <main className='mt-16'>
           <Outlet />
         </main>
       </div>

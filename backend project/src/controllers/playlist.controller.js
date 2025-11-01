@@ -7,13 +7,13 @@ import mongoose from "mongoose";
 const createPlayList = asyncHandler(async(req, res) => {
     const {name, description, videos} = req.body;
 
-    if(!name || !description) {
-        throw new ApiError(400, "name and description are required");
+    if(!name) {
+        throw new ApiError(400, "name is required");
     }
 
     const playlist = await Playlist.create({
         name,
-        description,
+        description: description || "",
         videos: Array.isArray(videos) ? videos : [],
         owner: req.user._id
 

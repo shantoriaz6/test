@@ -171,7 +171,7 @@ const UploadVideo = () => {
         {/* Title */}
         <div>
           <label className="block text-white font-semibold mb-2">
-            Title <span className="text-red-500">*</span>
+            Title <span className="text-red-500"></span>
           </label>
           <input
             type="text"
@@ -179,7 +179,7 @@ const UploadVideo = () => {
             value={formData.title}
             onChange={handleInputChange}
             placeholder="Enter video title"
-            className="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-gray-700 text-white font-bold px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             disabled={uploading}
             maxLength={100}
           />
@@ -191,7 +191,7 @@ const UploadVideo = () => {
         {/* Description */}
         <div>
           <label className="block text-white font-semibold mb-2">
-            Description <span className="text-red-500">*</span>
+            Description <span className="text-red-500"></span>
           </label>
           <textarea
             name="description"
@@ -199,7 +199,7 @@ const UploadVideo = () => {
             onChange={handleInputChange}
             placeholder="Enter video description"
             rows="5"
-            className="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            className="w-full bg-gray-700 text-white font-bold px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
             disabled={uploading}
             maxLength={5000}
           />
@@ -211,9 +211,9 @@ const UploadVideo = () => {
         {/* Video File Upload */}
         <div>
           <label className="block text-white font-semibold mb-2">
-            Video File <span className="text-red-500">*</span>
+            Video File <span className="text-red-500"></span>
           </label>
-          <div className="border-2 border-dashed border-gray-600 rounded-lg p-6">
+          <div className="border-4 border-solid border-gray-700 bg-gray-700 rounded-lg p-6">
             {videoPreview ? (
               <div className="space-y-3">
                 <video
@@ -239,8 +239,8 @@ const UploadVideo = () => {
             ) : (
               <label className="flex flex-col items-center cursor-pointer">
                 <FaVideo className="text-gray-400 text-5xl mb-3" />
-                <span className="text-gray-300 mb-2">Click to select video file</span>
-                <span className="text-gray-500 text-sm">MP4, AVI, MOV (Max 500MB)</span>
+                <span className="text-gray-300 font-bold mb-2">Click to select video file</span>
+                <span className="text-gray-300 font-boldtext-sm">MP4, AVI, MOV (Max 500MB)</span>
                 <input
                   type="file"
                   accept="video/*"
@@ -258,7 +258,7 @@ const UploadVideo = () => {
           <label className="block text-white font-semibold mb-2">
             Thumbnail <span className="text-red-500">*</span>
           </label>
-          <div className="border-2 border-dashed border-gray-600 rounded-lg p-6">
+          <div className="border-4 border-solid border-gray-700 bg-gray-700 rounded-lg p-6">
             {thumbnailPreview ? (
               <div className="space-y-3">
                 <img
@@ -284,8 +284,8 @@ const UploadVideo = () => {
             ) : (
               <label className="flex flex-col items-center cursor-pointer">
                 <FaImage className="text-gray-400 text-5xl mb-3" />
-                <span className="text-gray-300 mb-2">Click to select thumbnail</span>
-                <span className="text-gray-500 text-sm">JPG, PNG (Max 5MB)</span>
+                <span className="text-gray-300 font-bold mb-2">Click to select thumbnail</span>
+                <span className="text-gray-300 text-sm font-bold">JPG, PNG (Max 5MB)</span>
                 <input
                   type="file"
                   accept="image/*"

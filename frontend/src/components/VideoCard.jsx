@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaEllipsisV, FaPlus } from 'react-icons/fa';
+import PlaylistDropdown from './PlaylistDropdown';
 
 const VideoCard = ({ video }) => {
+  const [showPlaylistDropdown, setShowPlaylistDropdown] = useState(false);
+
   const formatDuration = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -18,21 +22,35 @@ const VideoCard = ({ video }) => {
   };
 
   return (
-    <Link to={`/dashboard/videos/${video._id}`} className="group">
-      <div className="bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-750 transition-colors">
-        {/* Thumbnail */}
-        <div className="relative aspect-video bg-gray-700">
-          <img
-            src={video.thumbnail}
-            alt={video.title}
-            className="w-full h-full object-cover"
-          />
-          {video.duration && (
-            <span className="absolute bottom-2 right-2 bg-black bg-opacity-80 text-white text-xs px-2 py-1 rounded">
-              {formatDuration(video.duration)}
-            </span>
-          )}
-        </div>
+    <div className="group relative">
+      <Link to={`/dashboard/videos/${video._id}`} className="block">
+        <div className="bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-750 transition-colors">
+          {/* Thumbnail */}
+          <div className="relative aspect-video bg-gray-700">
+            <img
+              src={video.thumbnail}
+              alt={video.title}
+              className="w-full h-full object-cover"
+            />
+            {video.duration && (
+              <span className="absolute bottom-2 right-2 bg-black bg-opacity-80 text-white text-xs px-2 py-1 rounded">
+                {formatDuration(video.duration)}
+              </span>
+            )}
+            
+            {/* Add to Playlist Button - Shows on hover */}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowPlaylistDropdown(!showPlaylistDropdown);
+              }}
+              className="absolute top-2 right-2 bg-black bg-opacity-70 hover:bg-opacity-90 text-white font-bold p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              title="Add to playlist"
+            >
+              <FaPlus />
+            </button>
+          </div>
 
         {/* Video Info */}
         <div className="p-3">
@@ -57,8 +75,19 @@ const VideoCard = ({ video }) => {
             <span>{new Date(video.createdAt).toLocaleDateString()}</span>
           </div>
         </div>
-      </div>
-    </Link>
+        </div>
+      </Link>
+      
+      {/* Playlist Dropdown - Outside Link to prevent navigation */}
+      {showPlaylistDropdown && (
+        <div className="relative">
+          <PlaylistDropdown
+            videoId={video._id}
+            onClose={() => setShowPlaylistDropdown(false)}
+          />
+        </div>
+      )}
+    </div>
   );
 };
 

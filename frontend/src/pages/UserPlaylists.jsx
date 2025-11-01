@@ -19,7 +19,7 @@ const UserPlaylists = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8000/api/v1/playlist/user/${currentUser._id}`,
+        `http://localhost:8000/api/v1/playlists/user/${currentUser._id}`,
         { withCredentials: true }
       );
 
@@ -27,10 +27,20 @@ const UserPlaylists = () => {
 
       if (response.data?.statusCode === 200) {
         setPlaylists(response.data.data || []);
+        setError('');
+      } else {
+        setPlaylists([]);
+        setError('');
       }
     } catch (err) {
-      console.error('Error fetching playlists:', err);
-      setError(err.response?.data?.message || 'Failed to load playlists');
+      if (err.response && err.response.status === 404) {
+        // No playlists found for user
+        setPlaylists([]);
+        setError('');
+      } else {
+        console.error('Error fetching playlists:', err);
+        setError(err.response?.data?.message || 'Failed to load playlists');
+      }
     } finally {
       setLoading(false);
     }

@@ -15,6 +15,7 @@ import Sidebar from './components/Sidebar'
 import Dashboard from './components/Dashboard'
 import UploadVideo from './pages/UploadVideo'
 import CreatePlaylist from './pages/CreatePlaylist'
+import PlaylistDetail from './pages/PlaylistDetail'
 import Layout from './services/Layout'
 import DashboardLayout from './services/DashboardLayout'
 import ChannelProfile from './pages/ChannelProfile'
@@ -56,12 +57,13 @@ const router = createBrowserRouter(
           {path: 'history', element: <WatchHistory />},
           {path: 'subscriptions', element: <SubscribedChannels />},
           {path: 'playlists', element: <UserPlaylists />},
+          {path: 'playlist', element: <CreatePlaylist />},
+          {path: 'playlist/:playlistId', element: <PlaylistDetail />},
           {path: 'liked-videos', element: <LikedVideos />},
           {path: 'c/:userName', element: <ChannelProfile />},
           {path: 'upload', element: <UploadVideo />},
           {path: 'videos/:videoId', element: <VideoWatch /> },
           {path: 'edit/:videoId', element: <EditVideo />},
-          {path: "playlist", element: <CreatePlaylist />},
         ]
     },
    

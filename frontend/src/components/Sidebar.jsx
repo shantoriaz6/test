@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaTachometerAlt, FaVideo } from 'react-icons/fa';
+import { FaTachometerAlt, FaVideo, FaTwitter } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { MdSubscriptions } from 'react-icons/md';
 import { MdHistory } from 'react-icons/md';
@@ -27,6 +27,18 @@ const Sidebar = () => {
               Videos
             </NavLink>
         </li>
+
+          <li className='mb-2 rounded hover:bg-blue-500 py-2'>
+              <NavLink 
+                to="/dashboard/tweets" 
+                className={({ isActive }) => 
+                  isActive ? 'px-3 text-blue-300' : 'px-3'
+                }
+              >
+                <FaTwitter className="inline-block w-6 h-6 mr-2 -mt-2" />
+                Tweets
+              </NavLink>
+          </li>
 
         <li className='mb-2 rounded hover:bg-blue-500 py-2'>
             <NavLink 

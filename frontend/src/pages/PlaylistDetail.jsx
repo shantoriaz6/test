@@ -111,12 +111,12 @@ const PlaylistDetail = () => {
         {isEditing ? (
           <div className="space-y-4">
             <div>
-              <label className="block text-white mb-2">Playlist Name</label>
+              <label className="block text-white mb-2">Name</label>
               <input
                 type="text"
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none"
+                className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -124,20 +124,20 @@ const PlaylistDetail = () => {
               <textarea
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none"
+                className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows="3"
               />
             </div>
             <div className="flex gap-3">
               <button
                 onClick={handleUpdate}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Save Changes
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
               >
                 Cancel
               </button>
@@ -166,13 +166,13 @@ const PlaylistDetail = () => {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setIsEditing(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                   >
                     <FaEdit /> Edit
                   </button>
                   <button
                     onClick={handleDelete}
-                    className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                    className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                   >
                     <FaTrash /> Delete
                   </button>
@@ -198,7 +198,7 @@ const PlaylistDetail = () => {
                 {isOwner && (
                   <button
                     onClick={() => handleRemoveVideo(video._id)}
-                    className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 z-10"
+                    className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-colors z-10 shadow-lg"
                     title="Remove from playlist"
                   >
                     <FaTimes />

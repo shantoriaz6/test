@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { toggleSubscription } from '../services/subscriptionService';
 
 const SubscribedChannels = () => {
   const [channels, setChannels] = useState([]);
@@ -61,7 +62,7 @@ const SubscribedChannels = () => {
           <p className="text-gray-500 text-sm mt-2">Subscribe to channels to see them here</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl-grid-cols-4 gap-6">
           {channels.map((channel) => (
             <Link
               key={channel._id}
@@ -83,6 +84,22 @@ const SubscribedChannels = () => {
                     {channel.subscribersCount} subscribers
                   </p>
                 )}
+                <button
+                  type="button"
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    try {
+                      await toggleSubscription(channel._id);
+                      // Optimistically remove from list (since this page shows channels the user is subscribed to)
+                      setChannels(prev => prev.filter(c => c._id !== channel._id));
+                    } catch (err) {
+                      alert(err.message || 'Failed to update subscription');
+                    }
+                  }}
+                  className="mt-3 px-4 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 text-sm font-medium"
+                >
+                  Unsubscribe
+                </button>
               </div>
             </Link>
           ))}

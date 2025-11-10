@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { toggleSubscription as toggleSubscriptionApi } from '../services/subscriptionService';
 import { FaUserCheck, FaUserPlus, FaCamera, FaEdit } from 'react-icons/fa';
 import VideoCard from '../components/VideoCard';
 
@@ -23,9 +24,14 @@ const ChannelProfile = () => {
   useEffect(() => {
     if (userName) {
       fetchChannelProfile();
-      fetchChannelVideos();
     }
   }, [userName]);
+
+  useEffect(() => {
+    if (channel?._id) {
+      fetchChannelVideos();
+    }
+  }, [channel?._id]);
 
   const fetchChannelProfile = async () => {
     try {
@@ -78,15 +84,11 @@ const ChannelProfile = () => {
 
     try {
       setSubscribing(true);
-      const response = await axios.post(
-        `http://localhost:8000/api/v1/subscriptions/c/${channel._id}`,
-        {},
-        { withCredentials: true }
-      );
+      const response = await toggleSubscriptionApi(channel._id);
 
-      console.log('Subscribe toggle response:', response.data);
+      console.log('Subscribe toggle response:', response);
 
-      if (response.data?.statusCode === 200) {
+      if (response?.statusCode === 200) {
         // Update local state
         setChannel(prev => ({
           ...prev,
@@ -223,9 +225,10 @@ const ChannelProfile = () => {
   }
 
   return (
-    <div className=" min-h-screen bg-gray-900 w-full">
+    <div className="min-h-screen bg-gray-700 w-full">
+      <div className="bg-gray-800 rounded-lg">
       {/* Cover Image */}
-      <div className="relative h-48 md:h-64 bg-gray-800 w-full">
+      <div className="relative h-48 md:h-64 bg-gray-800 w-full rounded-t-lg overflow-hidden">
         {channel.coverImage ? (
           <img
             src={channel.coverImage}
@@ -257,7 +260,7 @@ const ChannelProfile = () => {
       </div>
 
       {/* Channel Info */}
-      <div className="w-full">
+  <div className="w-full">
         <div className="flex flex-col md:flex-row items-start md:items-end gap-4 -mt-20 md:-mt-24 relative">
           {/* Avatar */}
           <div className="relative z-10">
@@ -290,9 +293,13 @@ const ChannelProfile = () => {
             <p className="text-gray-400 text-lg mb-2">@{channel.userName}</p>
             
             <div className="flex flex-wrap gap-4 text-gray-300 text-sm mb-4 pt-6 md:pt-8">
-              <span>
-                <strong className="text-white ">{channel.subscribersCount || 0}</strong> subscribers
-              </span>
+              <Link
+                to={`/dashboard/subscribers/${channel._id}`}
+                className="hover:text-white"
+                title="View subscribers"
+              >
+                <strong className="text-white">{channel.subscribersCount || 0}</strong> subscribers
+              </Link>
               <span>
                 <strong className="text-white">{channel.channelsSubscribedToCount || 0}</strong> subscriptions
               </span>
@@ -342,7 +349,7 @@ const ChannelProfile = () => {
         </div>
 
         {/* Tabs */}
-        <div className="border-b border-gray-700 mt-8">
+  <div className="border-b border-gray-700 mt-8">
           <div className="flex gap-8">
             <button
               onClick={() => setActiveTab('videos')}
@@ -354,7 +361,7 @@ const ChannelProfile = () => {
             >
               Videos
               {activeTab === 'videos' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white rounded-full" />
               )}
             </button>
             <button
@@ -367,14 +374,14 @@ const ChannelProfile = () => {
             >
               About
               {activeTab === 'about' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white rounded-full" />
               )}
             </button>
           </div>
         </div>
 
         {/* Tab Content */}
-        <div className="mt-6">
+  <div className="mt-6">
           {activeTab === 'videos' && (
             <div>
               {videosLoading ? (
@@ -385,14 +392,14 @@ const ChannelProfile = () => {
                   {isOwnChannel && (
                     <button
                       onClick={() => navigate('/dashboard/upload')}
-                      className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      className="mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
                     >
                       Upload Your First Video
                     </button>
                   )}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {videos.map((video) => (
                     <VideoCard key={video._id} video={video} />
                   ))}
@@ -431,6 +438,7 @@ const ChannelProfile = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

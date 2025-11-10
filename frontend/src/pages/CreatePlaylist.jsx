@@ -48,7 +48,7 @@ const CreatePlaylist = () => {
           <label className="block text-white mb-1">Playlist Name</label>
           <input
             type="text"
-            className="w-full px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none"
+            className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={name}
             onChange={e => setName(e.target.value)}
             required
@@ -59,11 +59,12 @@ const CreatePlaylist = () => {
         <div className="mb-4">
           <label className="block text-white mb-1">Description (optional)</label>
           <textarea
-            className="w-full px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none"
+            className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={description}
             onChange={e => setDescription(e.target.value)}
             maxLength={500}
             placeholder="Describe your playlist"
+            rows={3}
           />
         </div>
         <div className="mb-4">

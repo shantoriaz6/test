@@ -41,7 +41,12 @@ const Dashboard = () => {
       }
     } catch (err) {
       console.error('Error fetching videos:', err);
-      setError(err.response?.data?.message || 'Failed to load videos');
+      // If it's a 404 (no videos found), show empty state instead of error
+      if (err.response?.status === 404) {
+        setVideos([]);
+      } else {
+        setError(err.response?.data?.message || 'Failed to load videos');
+      }
     } finally {
       setLoading(false);
     }

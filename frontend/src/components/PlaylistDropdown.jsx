@@ -62,7 +62,7 @@ const PlaylistDropdown = ({ videoId, onClose }) => {
               <button
                 key={playlist._id}
                 onClick={() => handleToggleVideo(playlist._id, isInPlaylist)}
-                className="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-700 text-left"
+                className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-700 text-left transition-colors"
               >
                 <span className="text-white text-sm">{playlist.name}</span>
                 {isInPlaylist && <FaCheck className="text-blue-500" />}

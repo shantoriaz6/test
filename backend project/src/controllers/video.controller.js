@@ -35,10 +35,7 @@ const getAllVideos = asyncHandler(async (req, res ) => {
     .limit(limitNum)
     .populate("owner", "userName avatar");
 
-    if(!videos || videos.length === 0) {
-        throw new ApiError (404, "No videos found");
-    }
-
+    // Return empty array instead of 404 error when no videos found
     res.status(200)
     .json(new ApiResponse( 200, videos, "videos fetched successfully" ));
 

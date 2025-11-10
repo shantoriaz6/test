@@ -22,6 +22,7 @@ import ChannelProfile from './pages/ChannelProfile'
 import SubscribedChannels from './pages/SubscribedChannels'
 import WatchHistory from './pages/WatchHistory'
 import UserPlaylists from './pages/UserPlaylists'
+import TweetFeed from './pages/TweetFeed'
 
 
 
@@ -56,6 +57,8 @@ const router = createBrowserRouter(
           {index: true,element: <Dashboard/>},
           {path: 'history', element: <WatchHistory />},
           {path: 'subscriptions', element: <SubscribedChannels />},
+          {path: 'subscribers/:channelId', element: <ChannelSubscribers />},
+          {path: 'tweets', element: <TweetFeed />},
           {path: 'playlists', element: <UserPlaylists />},
           {path: 'playlist', element: <CreatePlaylist />},
           {path: 'playlist/:playlistId', element: <PlaylistDetail />},
